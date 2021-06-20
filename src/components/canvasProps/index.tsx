@@ -23,6 +23,7 @@ const CanvasProps:FC<Props> = (props) => {
     const [form] = Form.useForm();
 
     const [node, setNode] = useState<any>(null);
+    const [nodes, setNodes] = useState<any>(null);
     const [line, setLine] = useState<any>(null);
     const [multi, setMulti] = useState<any>(null);
     const [locked, setLocked] = useState<'yes'|'no'>('no');
@@ -49,11 +50,17 @@ const CanvasProps:FC<Props> = (props) => {
                     lineWidth: data.line.lineWidth,
                     text: data.line.text,
                     strokeStyle: data.line.strokeStyle,
-                    name: data.line.name
+                    name: data.line.name,
+                    fromArrow: data.line.fromArrow,
+                    toArrow: data.line.toArrow,
+                    dash: data.line.dash
                 }
             });
         }
         setMulti(data.multi);
+        if(data.multi && data.nodes) {
+            setNodes(data.nodes);
+        }
     }, [data]);
 
     /**
@@ -96,6 +103,31 @@ const CanvasProps:FC<Props> = (props) => {
                 break;
         }
     }
+    /**
+     * 删除所选区域内的节点
+     */
+    const handleDel = () => {
+        if(data.node) {
+            canvas.delete([data.node]);
+            return;
+        }
+        if(data.line) {
+            canvas.delete([data.line]);
+            return;
+        }
+        canvas.delete(data.nodes);
+    }
+    /**
+     * 删除操作
+     */
+    const commonOperate = <>
+        <div className={styles.title}>操作</div>
+        <div className={styles.padding}>
+            <Button type="primary" block onClick={handleDel}>
+                    删除
+            </Button>
+        </div>
+    </>;
     if (node) {
         return (
           <Form {...layout} form={form} onValuesChange={onFormValuesChange}>
@@ -117,9 +149,20 @@ const CanvasProps:FC<Props> = (props) => {
             <Form.Item label='内容' name={['node', 'text']} initialValue={node.text}>
                 <Input />
             </Form.Item>
+            {commonOperate}
           </Form>
         );
       } else if (line) {
+          const ARROW = <Select>
+          <Select.Option value="">无箭头</Select.Option>
+          <Select.Option value="triangleSolid">实心三角形</Select.Option>
+          <Select.Option value="triangle">空心三角形</Select.Option>
+          <Select.Option value="diamondSolid">实心菱形</Select.Option>
+          <Select.Option value="diamond">空心菱形</Select.Option>
+          <Select.Option value="circleSolid">实心圆</Select.Option>
+          <Select.Option value="circle">空心圆</Select.Option>
+          <Select.Option value="line">线型箭头</Select.Option>
+      </Select>
         return (
             <Form {...layout} form={form} onValuesChange={onFormValuesChange}>
                 <div className={styles.title}>样式</div>
@@ -142,16 +185,30 @@ const CanvasProps:FC<Props> = (props) => {
                         <Select.Option value="#06A51C">绿色</Select.Option>
                     </Select>
                 </Form.Item>
+                <Form.Item label='线类型' name={['line', 'dash']} initialValue={line.dash}>
+                    <Select>
+                        <Select.Option value={0}>实线</Select.Option>
+                        <Select.Option value={1}>虚线</Select.Option>
+                        <Select.Option value={2}>宽虚线</Select.Option>
+                        <Select.Option value={3}>点虚线</Select.Option>
+                    </Select>
+                </Form.Item>
+                <div className={styles.title}>箭头</div>
+                <Form.Item label='起点' name={['line', 'fromArrow']} initialValue={line.fromArrow}>
+                    {ARROW}
+                </Form.Item>
+                <Form.Item label='终点' name={['line', 'toArrow']} initialValue={line.toArrow}>
+                    {ARROW}
+                </Form.Item>
                 <div className={styles.title}>文字</div>
                 <Form.Item label='内容' name={['line', 'text']} initialValue={line.text}>
                     <Input placeholder='请输入内容' />
                 </Form.Item>
+                {commonOperate}
           </Form>
         );
       } else if (multi) {
-        return (
-          <div className={styles.title}>multi</div>
-        );
+        return commonOperate;
       }
       return <Form {...layout} form={form} onValuesChange={onFormValuesChange}>
           <div className={styles.title}>样式</div>
@@ -173,7 +230,7 @@ const CanvasProps:FC<Props> = (props) => {
                     恢复
             </Button>
             <Button type="primary" block onClick={handleOperate('lock')}>
-                    {locked === 'no' ? '锁定' : '解锁'}
+                    {locked === 'no' ? '锁定画布' : '解锁画布'}
             </Button>
             <Button type="primary" block onClick={handleOperate('export')}>
                     导出PNG
@@ -181,7 +238,6 @@ const CanvasProps:FC<Props> = (props) => {
             <Button type="primary" block onClick={handleOperate('pureData')}>
                     显示数据
             </Button>
-            
           </div>
     </Form>
 }

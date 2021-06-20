@@ -1,3 +1,4 @@
+import MUSIC_PNG from '@/components/customNode/music/music.png';
 export const Tools = [
     {
       group: '基本形状',
@@ -705,6 +706,36 @@ export const Tools = [
                 }
               }
             ]
+          }
+        }
+      ]
+    },
+    {
+      group: '自定义图形',
+      children: [
+        {
+          name: '音乐',
+          icon: 'icon-AppleMusic',
+          image: require('../components/customNode/music/music.png'),
+          data: {
+            name: 'musicNode',
+            text: '自定义图形-音乐',
+            rect: {
+              width: 100,
+              height: 100
+            }  
+          }
+        },
+        {
+          name: '电脑',
+          icon: 'icon-iMac',
+          data: {
+            name: 'pcNode',
+            text: '自定义图形-电脑',
+            rect: {
+              width: 100,
+              height: 100
+            }  
           }
         }
       ]

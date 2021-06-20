@@ -1,0 +1,52 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 2621298 */
+    src: url('//at.alicdn.com/t/font_2621298_6enlb8wot5f.woff2?t=1624160166208') format('woff2'),
+         url('//at.alicdn.com/t/font_2621298_6enlb8wot5f.woff?t=1624160166208') format('woff'),
+         url('//at.alicdn.com/t/font_2621298_6enlb8wot5f.ttf?t=1624160166208') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-AppleMusic:before {
+    content: "\e733";
+  }
+  
+  .icon-AppleWatchEdition:before {
+    content: "\e734";
+  }
+  
+  .icon-Apple:before {
+    content: "\e735";
+  }
+  
+  .icon-iMac:before {
+    content: "\e736";
+  }
+  
+  .icon-AppleWatchSeries:before {
+    content: "\e737";
+  }
+  
+  .icon-AppleWatchNike:before {
+    content: "\e738";
+  }
+  
+  .icon-iPadMini:before {
+    content: "\e739";
+  }
+  
+  .icon-iOS:before {
+    content: "\e73a";
+  }
+  
+  .icon-iPadAcc:before {
+    content: "\e73b";
+  }
+  
+  

@@ -1,11 +1,12 @@
-import { FC, useState, useEffect, CSSProperties } from 'react';
+import { FC, useState, useEffect, CSSProperties, useMemo } from 'react';
 import { Tools } from '@/config/tools';
-import { Topology, Options, registerNode, Node, Line } from '@topology/core';
+import { Topology, Options } from '@topology/core';
 import { register as registerFlow } from '@topology/flow-diagram';
 import { register as registerActivity } from '@topology/activity-diagram';
 import { register as registerClass } from '@topology/class-diagram';
 import { register as registerSequence } from '@topology/sequence-diagram';
 import { register as registerChart } from '@topology/chart-diagram';
+import { registerCustomNodes } from '@/components/customNode';
 import CanvasProps from '../components/canvasProps';
 import ContentMenu from '../components/contentMenu';
 
@@ -120,11 +121,20 @@ const Index:FC = () => {
   //初始化
   useEffect(() => {
     //注册
+
+    //流程图
     registerFlow();
+    //活动图
     registerActivity();
+    //类图
     registerClass();
+    //时序图
     registerSequence();
+    //基本形状
     registerChart();
+
+    //注册自定义图形
+    registerCustomNodes();
     
     document.onclick = event => {
       setMenuStyle({
@@ -175,6 +185,8 @@ const Index:FC = () => {
           selected.line[key] = changedValues.line[key];
         }
       }
+      console.log(changedValues);
+      console.log(selected.line);
       // 通知属性更新，刷新
       canvas?.updateProps(selected.line);
     }
@@ -219,7 +231,7 @@ const Index:FC = () => {
                       item.children.map((btn: any, i: number) => {
                         return (
                           <a key={i} title={btn.name} draggable={true} onDragStart={(ev) => { onDrag(ev, btn) }}>
-                            <i className={'iconfont ' + btn.icon} style={iconfont} />
+                            {btn.image ? <img src={btn.image} /> : <i className={'iconfont ' + btn.icon} style={iconfont} />}
                           </a>
                         )
                       })
@@ -232,10 +244,12 @@ const Index:FC = () => {
     </div>
     <div id="workspace" className={styles.full} onContextMenu={handleContextMenu} />
     <div className={styles.props}>
-      <CanvasProps canvas={canvas} data={selected} onValuesChange={handlePropsChange} />
+      {useMemo(() => {
+        return <CanvasProps canvas={canvas} data={selected} onValuesChange={handlePropsChange} />;
+      }, [canvas, selected])}
     </div>
-    <div style={menuStyle} >
-        <ContentMenu data={selected} canvas={canvas} />
+    <div style={menuStyle}>
+      <ContentMenu setSelect={setSelect} data={selected} canvas={canvas} />;
     </div>
   </div>
   );
