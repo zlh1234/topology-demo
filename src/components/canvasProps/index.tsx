@@ -5,6 +5,7 @@ import styles from './index.less';
 // import { canvas as canvasEl } from '../../pages/index';
 
 interface Props {
+    clearSelect:any;
     canvas: any;
     data: {
         node?: any;
@@ -19,7 +20,7 @@ const layout = {
     wrapperCol: { span: 14 },
   };
 const CanvasProps:FC<Props> = (props) => {
-    let { onValuesChange, data, canvas } = props;
+    let { onValuesChange, data, canvas, clearSelect } = props;
     const [form] = Form.useForm();
 
     const [node, setNode] = useState<any>(null);
@@ -116,6 +117,7 @@ const CanvasProps:FC<Props> = (props) => {
             return;
         }
         canvas.delete(data.nodes);
+        clearSelect();
     }
     /**
      * 删除操作

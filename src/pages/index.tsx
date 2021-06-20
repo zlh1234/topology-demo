@@ -35,7 +35,20 @@ const Index:FC = () => {
     left: '',
     top: '',
     bottom: ''
-  })
+  });
+
+  /**
+   * 清空选择
+   */
+  const clearSelect = () => {
+    setSelect({
+      node: null,
+      line: null,
+      multi: false,
+      nodes: null,
+      locked: false
+    });
+  }
 
   /**
    * 获取是否锁定
@@ -245,11 +258,11 @@ const Index:FC = () => {
     <div id="workspace" className={styles.full} onContextMenu={handleContextMenu} />
     <div className={styles.props}>
       {useMemo(() => {
-        return <CanvasProps canvas={canvas} data={selected} onValuesChange={handlePropsChange} />;
+        return <CanvasProps clearSelect={clearSelect} canvas={canvas} data={selected} onValuesChange={handlePropsChange} />;
       }, [canvas, selected])}
     </div>
     <div style={menuStyle}>
-      <ContentMenu setSelect={setSelect} data={selected} canvas={canvas} />;
+      <ContentMenu clearSelect={clearSelect} data={selected} canvas={canvas} />;
     </div>
   </div>
   );

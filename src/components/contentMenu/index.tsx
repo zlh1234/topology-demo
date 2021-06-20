@@ -2,11 +2,11 @@ import {FC} from 'react';
 import { Menu } from 'antd';
 import styles from './index.less';
 interface Props {
-    setSelect:any;
+    clearSelect:any;
     data: any;
     canvas: any;
 }
-const ContentMenu:FC<Props> = ({ data, canvas, setSelect }) => {
+const ContentMenu:FC<Props> = ({ data, canvas, clearSelect }) => {
     let nodeDisabled = (data.line || data.node || data.nodes) ? '' : styles.disabled;
     /**
      * 删除节点
@@ -17,13 +17,7 @@ const ContentMenu:FC<Props> = ({ data, canvas, setSelect }) => {
         } else if(data.line || (data.nodes && data.nodes.length)) {
             canvas.delete(data.line ? [data.line] : data.nodes);
         }
-        setSelect({
-            node: null,
-            line: null,
-            multi: false,
-            nodes: null,
-            locked: false
-        });
+        clearSelect();
     }
     return <div className={styles.menus}>
          <div>
