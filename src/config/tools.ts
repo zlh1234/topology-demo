@@ -111,6 +111,8 @@ export const Tools = [
             width: 100,
             height: 100,
           },
+          paddingTop: 10,
+          paddingBottom: 10,
           name: 'pentagram',
         },
       },
@@ -715,7 +717,6 @@ export const Tools = [
     children: [
       {
         name: '音乐',
-        icon: 'icon-AppleMusic',
         image: require('../components/customNode/music/music.png'),
         data: {
           name: 'musicNode',
@@ -729,7 +730,7 @@ export const Tools = [
       },
       {
         name: '电脑',
-        icon: 'icon-iMac',
+        image: require('../components/customNode/pc/pc.png'),
         data: {
           name: 'pcNode',
           text: '自定义图形-电脑',
@@ -738,6 +739,35 @@ export const Tools = [
             height: 100,
           },
           customClick: 'pc-1',
+        },
+      },
+      {
+        name: '文字块',
+        icon: 'icon-tx-fill-changfangxing',
+        data: {
+          name: 'textBoxNode',
+          text: '文字文字',
+          rect: {
+            width: 150,
+            height: 30,
+          },
+          fontColor: '#FFFFFF',
+          fillStyle: '#222222',
+        },
+      },
+      {
+        name: 'apple',
+        icon: 'icon-Apple',
+        data: {
+          name: 'appleNode',
+          text: '123456',
+          rect: {
+            width: 100,
+            height: 100,
+          },
+          icon: '\ue735',
+          iconFamily: 'iconfont',
+          iconColor: '#2f54eb',
         },
       },
     ],

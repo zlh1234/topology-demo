@@ -1,5 +1,5 @@
 @import '~antd/es/style/themes/default.less';
-@size: 24px;
+@size: 28px;
 .page {
   display: flex;
   width: 100vw;
@@ -26,17 +26,16 @@
     }
 
     .buttons {
-      padding: 10px 0;
       a {
         display: inline-block;
         color: @text-color;
         line-height: 1;
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         text-align: center;
         text-decoration: none !important;
 
-        .iconfont {
+        i {
           font-size: @size;
         }
         img {
@@ -51,11 +50,19 @@
   }
 
   .full {
+    position: relative;
     flex: 1;
     width: initial;
     position: relative;
     overflow: auto;
     background: #fff;
+    .locked {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 999;
+      color: chocolate;
+    }
   }
 
   .props {
