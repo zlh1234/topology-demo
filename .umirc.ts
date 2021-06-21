@@ -10,4 +10,5 @@ export default defineConfig({
   ],
   fastRefresh: {},
   title: 'Topology demo',
+  hash: true
 });
